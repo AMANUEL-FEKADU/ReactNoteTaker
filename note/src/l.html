@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hover Reveal Card</title>
+<style>
+  :root{
+    --radius: 16px;
+    --shadow-muted: 0 8px 24px rgba(0,0,0,.25);
+    --shadow-strong: 0 16px 40px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body{
+    margin:0;
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    background:#0f172a; /* slate-900 */
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+    color:#e2e8f0;
+  }
+
+  .card{
+    width:min(92vw, 360px);
+    border-radius: var(--radius);
+    overflow:hidden;
+    position:relative;
+    transform: translateZ(0); /* create a new layer */
+    box-shadow: var(--shadow-muted);
+    transition:
+      transform .35s ease,
+      box-shadow .35s ease,
+      filter .35s ease,
+      opacity .35s ease;
+    /* shadowed/ghost look */
+    filter: grayscale(100%) contrast(.85) brightness(.8) blur(.3px);
+    opacity:.85;
+  }
+
+  /* image fills the card */
+  .card__media{
+    aspect-ratio: 16/10;
+    width:100%;
+    object-fit: cover;
+    display:block;
+  }
+
+  /* subtle overlay to help text legibility */
+  .card__overlay{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.05));
+    pointer-events:none;
+    transition: opacity .35s ease;
+  }
+
+  .card__body{
+    background: white;
+    color: #0f172a;
+    padding: 16px 18px 18px;
+  }
+
+  .card__title{
+    margin:0 0 6px 0;
+    font-size:1.05rem;
+    font-weight:700;
+  }
+  .card__text{
+    margin:0;
+    line-height:1.45;
+    color:#334155; /* slate-700 */
+  }
+
+  /* hover/focus = fully revealed */
+  .card:hover,
+  .card:focus-within{
+    filter:none;
+    opacity:1;
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-strong);
+  }
+  .card:hover .card__overlay,
+  .card:focus-within .card__overlay{
+    opacity:.1;
+  }
+
+  /* optional: respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .card{ transition: none; transform:none; }
+    .card:hover, .card:focus-within{ transform:none; }
+  }
+
+  /* small button just to show focus-within behavior */
+  .card__btn{
+    margin-top:12px;
+    display:inline-block;
+    padding:8px 12px;
+    border-radius: 10px;
+    border:1px solid #cbd5e1; /* slate-300 */
+    background:#fff;
+    color:#0f172a;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .card__btn:focus{ outline: 3px solid #60a5fa; outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+  <article class="card" tabindex="0">
+    <img class="card__media" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Colorful abstract gradient" />
+    <div class="card__overlay"></div>
+    <div class="card__body">
+      <h3 class="card__title">Blue Notes</h3>
+      <p class="card__text">Capture ideas quickly, then expand them later. Hover to reveal the full vibe.</p>
+      <a class="card__btn" href="#">Open</a>
+    </div>
+  </article>
+
+</body>
+</html>
